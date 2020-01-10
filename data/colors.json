@@ -1,0 +1,52 @@
+{
+  "colors": {
+    "green": {
+      "id": 1,
+      "description": "it's not easy being green"
+    },
+    "grey": {
+      "id": 2,
+      "description": "gray"
+    },
+    "yellow": {
+      "id": 3,
+      "description": "alert"
+    },
+    "random": {
+      "id": 4,
+      "description": "all the colors of the rainbow"
+    },
+    "red": {
+      "id": 11,
+      "description": "alert"
+    },
+    "matrix": {
+      "id": 5,
+      "description": "black and green"
+    },
+    "peach": {
+      "id": 5,
+      "description": "almost pink"
+    },
+    "mainframe": {
+      "id": 6,
+      "description": "smaller/thinner text font"
+    },
+    "white": {
+      "id": 7,
+      "description": "bright white"
+    },
+    "default": {
+      "id": 10,
+      "description": "return to default settings"
+    },
+    "black": {
+      "id": 8,
+      "description": "like default but bigger"
+    },
+    "bsod": {
+      "id": 9,
+      "description": "blue screen of death"
+    }
+  }
+}

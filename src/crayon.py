@@ -1,5 +1,7 @@
+import json
 import logging
 import os
+import subprocess
 from argparse import ArgumentParser
 
 logger = logging.getLogger('mfn')
@@ -8,9 +10,10 @@ logger.setLevel(logging.INFO)
 FEATURE_GENERATE_MAKEFILE = True
 FEATURE_PROJECT_INIT = True
 
+DEFAULT_DISPLAY_REFERENCE = 1
 HOME_DIR = os.getenv('HOME')
 PWD_DIR = os.getenv('PWD')
-LOG_CONFIG_PATH = '{}/mfn.log'.format(HOME_DIR)
+LOG_CONFIG_PATH = '{}/crayon.log'.format(HOME_DIR)
 
 logging.basicConfig(filename=LOG_CONFIG_PATH)
 logger_stdout = logging.StreamHandler()
@@ -23,26 +26,46 @@ if (os.getenv('VERBOSE', False)):
     logger.setLevel(logging.DEBUG)
 
 
-def colors_get_current():
-    pass
+def osascript_terminal(command_string):
+    prepared_command_string = ' '.join([
+        'osascript',
+        '-e \'tell application "Terminal" to {}\''.format(command_string),
+    ])
+    logging.info(prepared_command_string)
+    print(prepared_command_string)
+    subprocess.run(prepared_command_string, shell=True)
+
+
+def colors_get_current(display_ref=DEFAULT_DISPLAY_REFERENCE):
+    osascript_terminal('"get current settings of window {}"'.format(display_ref))
 
 
 def colors_list():
-    pass
+    for color in colors_list_get():
+        print(color)
 
 
 def colors_set_default():
-    pass
+    colors_set('default')
 
 
-def colors_set():
-    pass
+def colors_set(target_color_name, display_ref=DEFAULT_DISPLAY_REFERENCE):
+    colors = colors_list_get()
+    color_id = colors[target_color_name]['id']
+    osascript_terminal('set current settings of window {} to settings set {}'.format(display_ref, color_id))
+
+
+def colors_list_get():
+    with open('data/colors.json') as colors_json:
+        colors = json.load(colors_json)
+        return colors['colors']
 
 
 def parse_arguments(args=None):
     parser = ArgumentParser()
     parser.add_argument('--list', action='store_true', help='list the current display options')
     parser.add_argument('--set', help='set the current display settings')
+    parser.add_argument('--target', help='specify the target terminal to interact with')
     parser.add_argument('--get', action='store_true', help='get the current display settings')
     parser.add_argument('--default', action='store_true', help='default display settings')
 
