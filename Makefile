@@ -49,7 +49,7 @@ flake8:
 	$(venv_flake8_path) src/
 
 isort:
-	$(venv_isort_path) --quiet --check-only --recursive src
+	$(venv_isort_path) --quiet --check-only --recursive src tests
 
 json-lint:
 	python -m json.tool data/*.json >/dev/null
