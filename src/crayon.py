@@ -13,6 +13,7 @@ FEATURE_PROJECT_INIT = True
 DEFAULT_DISPLAY_REFERENCE = 1
 HOME_DIR = os.getenv('HOME')
 PWD_DIR = os.getenv('PWD')
+SRC_DIR = os.path.dirname(os.path.realpath(__file__))
 LOG_CONFIG_PATH = '{}/crayon.log'.format(HOME_DIR)
 
 logging.basicConfig(filename=LOG_CONFIG_PATH)
@@ -56,7 +57,7 @@ def colors_set(target_color_name, display_ref=DEFAULT_DISPLAY_REFERENCE):
 
 
 def colors_list_get():
-    with open('data/colors.json') as colors_json:
+    with open('{}/../data/colors.json'.format(SRC_DIR)) as colors_json:
         colors = json.load(colors_json)
         return colors['colors']
 
